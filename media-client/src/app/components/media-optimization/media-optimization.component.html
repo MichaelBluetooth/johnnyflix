@@ -1,0 +1,6 @@
+<div class="is-flex is-flex-direction-column">
+    <label class="checkbox mb-4" *ngFor="let value of values">
+        <input type="checkbox" [checked]="value.optimize" (change)="value.optimize=!value.optimize"/>
+        {{value.name | mediaVersionName}}
+    </label>    
+</div>

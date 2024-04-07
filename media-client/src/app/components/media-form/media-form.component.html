@@ -1,0 +1,50 @@
+<form [formGroup]="form">
+    <div class="field" *ngIf="form.controls['file']">
+        <label class="label">File</label>
+        <div class="control">
+            <input class="input" type="file" placeholder="File" formControlName="file" accept=".mkv,.mp4"
+                [class.is-danger]="form.controls['file'].dirty && !!form.controls['file'].errors" (change)="onFileUpload($event)">
+        </div>
+        <p class="help is-danger" *ngIf="form.controls['file'].dirty && !!form.controls['file'].errors">File is required</p>
+    </div>
+    <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="Name" formControlName="name"
+                [class.is-danger]="form.controls['name'].dirty && !!form.controls['name'].errors">
+        </div>
+        <p class="help is-danger" *ngIf="form.controls['name'].dirty && !!form.controls['name'].errors">Name is required</p>
+    </div>
+    <div class="field">
+        <label class="label">Description</label>
+        <div class="control">
+            <textarea class="textarea" placeholder="Description" formControlName="description" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Release Year</label>
+        <div class="control">
+            <input class="input" type="number" placeholder="Release year" formControlName="releaseYear">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Duration</label>
+        <div class="is-flex is-align-items-center">
+            <div class="control is-flex is-align-items-center mr-4 is-align-self-stretch">
+                <input class="input is-flex-grow-1" type="number" placeholder="Hours" formControlName="durationHrs">
+                <span class="ml-2">Hrs</span>
+            </div>
+            <div class="control is-flex is-align-items-center">
+                <input class="input" type="number" placeholder="Minutes" formControlName="durationMin">
+                <span class="ml-2">Min</span>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Tags</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="Enter tags delimited by commas" formControlName="tags">
+        </div>
+        <p class="help">Enter tags delimited by commas</p>
+    </div>
+</form>

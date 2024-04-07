@@ -1,0 +1,17 @@
+<input #input class="input" type="file" accept=".jpg,.png" multiple (change)="uploadFile($event)">
+<!-- <ng-container>
+    <div class="columns mt-4" *ngFor="let row of posters">
+        <div class="column is-one-quarter" *ngFor="let poster of row">
+            <img class="is-3by4" [src]="media.id | mediaImage:poster" [class.selected]="selectedPoster === poster" (click)="selectPoster(poster)">
+        </div>
+    </div>
+</ng-container> -->
+
+<ng-container>
+    <div class="columns mt-4" *ngFor="let row of posters">
+        <div class="column is-one-quarter" *ngFor="let poster of row">
+            <img *ngIf="poster.name" class="is-3by4" [src]="media.id | mediaImage:poster.name" [class.selected]="selectedPoster === poster.name" (click)="selectPoster(poster.name)">
+            <img *ngIf="poster.file" class="is-3by4" [src]="poster.file | fileImage | async" [class.selected]="selectedPoster === poster.file.name" (click)="selectPoster(poster.file.name)">
+        </div>
+    </div>
+</ng-container>

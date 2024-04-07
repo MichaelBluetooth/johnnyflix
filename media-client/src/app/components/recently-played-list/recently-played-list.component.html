@@ -1,0 +1,32 @@
+<h1 class="title is-1">Recently Played</h1>
+<div class="columns" *ngFor="let row of media$ | async">
+    <div class="column is-one-quarter is-flex is-flex-direction-row is-justify-content-center" *ngFor="let media of row">
+        <div class="card" style="width: 85%">
+            <div class="card-image">
+                <a [routerLink]="['/watch', media.id]">
+                    <figure class="image is-2by3 hoverable">
+                        <!-- <img src="assets/poster-placeholder.jpg" alt="Placeholder image"> -->
+                        <img [src]="media.id | mediaImage:media.posterFileName" alt="Placeholder image">
+                    </figure>
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                        <a [routerLink]="['/media', media.id]">
+                            <p class="title is-4">{{media.name}}</p>
+                        </a>
+                        <p class="subtitle is-6">{{media.releaseYear}}</p>
+                        <progress class="progress is-primary" [value]="media.lastPosition * 1000" [max]="media.duration">
+                            30%
+                        </progress>
+                    </div>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a class="card-footer-item" [routerLink]="['/watch', media.id]">Resume</a>
+                <a class="card-footer-item" [routerLink]="['/watch', media.id]" [queryParams]="{restart: true}">Restart</a>
+            </footer>
+        </div>
+    </div>
+</div>

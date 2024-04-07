@@ -1,0 +1,31 @@
+<nav class="panel full-h">
+    <!-- <p class="panel-heading">
+      Libraries
+    </p> -->
+    <a class="panel-block" [routerLink]="['/']" routerLinkActive="router-link-active">
+        <span class="panel-icon">
+            <i class="bi bi-house-door-fill"></i>
+        </span>
+        Home
+    </a>
+    <ng-container *ngFor="let library of libraries">
+        <a class="panel-block" [routerLink]="['/library', library.id]" routerLinkActive="router-link-active">
+            <span class="panel-icon">
+                <i class="bi bi-film"></i>
+            </span>
+            {{library.name}}
+        </a>
+    </ng-container>
+    <a class="panel-block" [routerLink]="['/']" routerLinkActive="router-link-active">
+        <span class="panel-icon">
+            <i class="bi bi-collection"></i>
+        </span>
+        Libraries
+    </a>
+    <a class="panel-block" [routerLink]="['/jobs']" routerLinkActive="router-link-active">
+        <span class="panel-icon">
+            <i class="bi bi-clipboard-pulse"></i>
+        </span>
+        Jobs
+    </a>
+</nav>

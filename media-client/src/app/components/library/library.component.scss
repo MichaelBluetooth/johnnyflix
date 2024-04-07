@@ -1,0 +1,17 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.hoverable:hover {
+    opacity: .8;
+    cursor: pointer;
+}
+
+.media-content {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
