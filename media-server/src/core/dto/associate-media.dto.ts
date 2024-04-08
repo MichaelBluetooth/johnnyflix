@@ -9,4 +9,5 @@ export interface AssociateMediaRequest {
     releaseYear?: number;
     duration?: number;
     posterFileName?: string;
+    availablePosters?: string[];
 }

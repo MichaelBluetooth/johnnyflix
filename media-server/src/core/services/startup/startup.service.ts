@@ -163,7 +163,8 @@ export class StartupService implements OnApplicationBootstrap {
             description: description,
             releaseYear: releaseYear,
             duration: duration,
-            posterFileName: poster
+            posterFileName: poster,
+            availablePosters: [poster]
         });
     }
 

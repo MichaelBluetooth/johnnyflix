@@ -33,7 +33,7 @@ export class MediaService {
   }
 
   listPosters(id: number): Observable<string[]> {
-    return this.http.get<string[]>(`api/media/${id}/poster`)
+    return this.http.get<string[]>(`api/image/${id}/poster`)
   }
 
   editMedia(media: Media, container: ViewContainerRef) {
@@ -67,7 +67,7 @@ export class MediaService {
     posters.forEach((file: File) => {
       formData.append('posters', file, file.name);
     });
-    return this.http.post<string[]>(`api/media/${id}/poster/upload`, formData);
+    return this.http.post<string[]>(`api/image/${id}/poster/upload`, formData);
   }
 
   createMedia(libraryId: number, container: ViewContainerRef) {

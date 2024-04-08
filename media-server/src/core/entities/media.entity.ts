@@ -39,4 +39,7 @@ export class Media extends DefaultEntity {
 
     @Column({ type: 'varchar', length: 150, nullable: true })
     posterFileName: string;
+
+    @Column({ type: 'text', array: true, nullable: true }) //todo: really need "text" as the type? Isn't that a slow DB column type?
+    availablePosters: string[];
 }

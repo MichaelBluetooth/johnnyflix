@@ -32,6 +32,7 @@ export class MediaService {
         media.releaseYear = data.releaseYear;
         media.duration = data.duration;
         media.posterFileName = data.posterFileName;
+        media.availablePosters = data.availablePosters;
         return this.mediaRepo.save(media);
     }
 
@@ -51,7 +52,7 @@ export class MediaService {
         media.releaseYear = data.releaseYear;
         media.duration = data.duration;
         media.posterFileName = data.posterFileName;
-
+        media.availablePosters = data.posterFileNames;
         media.fileName = data.fileName;
         media.path = `${directory.path}/${HlsUtils.getSafeFolderName(data.fileName)}`;
 
@@ -64,6 +65,7 @@ export class MediaService {
             this.savePoster(media.id, posters[i], data.posterFileNames[i]);
         }
         writeFileSync(`${media.path}/${media.fileName}`, file.buffer);
+
 
         data.versions?.filter((version: CreateMediaVersion) => version.optimize)?.forEach((version: CreateMediaVersion) => {
             const hlsVersion = HlsVersion.ALL.find(v => v.name === version.name);
@@ -186,9 +188,9 @@ export class MediaService {
 
     async getPosters(id: number) {
         const media = await this.mediaRepo.findOneBy({ id });
-        const postersPath = media.path + '/posters';
-        const files = readdirSync(postersPath);
-        return files;
+        // const postersPath = media.path + '/posters';
+        // const files = readdirSync(postersPath);
+        return media.availablePosters;
     }
 
     async savePoster(id: number, file: Express.Multer.File, fileName: string) {
@@ -200,6 +202,9 @@ export class MediaService {
         const fullPosterPath = `${posterPath}/${fileName}`;
         this.logger.debug(`Saving poster: ${fileName} to path ${fullPosterPath}`);
         writeFileSync(fullPosterPath, file.buffer);
+
+        media.availablePosters = [...new Set(media.availablePosters.concat([fileName]))];
+        this.mediaRepo.save(media);
     }
 
     findMediaByFileNameAndPath(name: string, path: string) {

@@ -104,7 +104,8 @@ export class FindMediaConsumer {
                         this.savePoster(movie.path, 'posters', tmdbMatch.results[0].poster_path);
                         this.savePoster(movie.path, 'backdrops', tmdbMatch.results[0].backdrop_path);
 
-                        const releaseYear = Number(tmdbMatch.results[0].release_date.split('-')[0])
+                        const releaseYear = Number(tmdbMatch.results[0].release_date.split('-')[0]);
+                        const posterFileName = basename(tmdbMatch.results[0].poster_path);
                         media = await this.mediaSvc.associateMedia({
                             libraryId: job.data.libraryId,
                             fileName: movie.name,
@@ -113,7 +114,8 @@ export class FindMediaConsumer {
                             name: tmdbMatch.results[0].title,
                             description: tmdbMatch.results[0].overview,
                             releaseYear: releaseYear > 0 ? releaseYear : null,
-                            posterFileName: basename(tmdbMatch.results[0].poster_path),
+                            posterFileName: posterFileName,
+                            availablePosters: [posterFileName],
                             duration: durationMS,
                             tags: tmdbMatch.results[0].genre_ids.map(id => genres.has(id) ? genres.get(id) : null).filter(name => !!name)
                         });
