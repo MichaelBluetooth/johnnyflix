@@ -1,17 +1,46 @@
+@import '../../../styles.scss';
+
 .wrapper {
+    padding-top: 15px;    
     height: 100%;
     width: 100%;
-    position: relative;
 }
 
-.main-content {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0px;
-    left: 0px;
+
+@media only screen and (max-width: $size-lg) {
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        margin-bottom: 155px;
+    }
+
+    .image-wrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding-left: 25px;
+        padding-right: 25px;
+    }    
+
+    .media-details-wrapper {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
 }
 
-.gap {
-    gap: 25px;
+@media only screen and (min-width: $size-lg) {
+    .wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 25px;
+    }
+
+    .image-wrapper {
+        width: 500px;
+    }
+
+    .media-details-wrapper {
+        // width: 100%;
+    }
 }

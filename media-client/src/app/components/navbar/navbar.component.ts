@@ -1,29 +1,26 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { SidePanelComponent } from '../side-panel/side-panel.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    SidePanelComponent
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit {
-  showMenu = true;
+  showMenu = false;
 
   ngOnInit(): void {
-    this.showMenu = !this.isMobile();
   }
 
-  isMobile() {
-    if (window.matchMedia('screen and (max-width: 912px)').matches) {
-      return true;
-    } else {
-      return false;
-    }
+  menuItemClicked() {
+    this.showMenu = false;
   }
 }

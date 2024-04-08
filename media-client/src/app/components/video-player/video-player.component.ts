@@ -3,7 +3,6 @@ import { ActivatedRoute, Data } from '@angular/router';
 import videojs from 'video.js';
 import { PlayHistoryService } from '../../services/play-history.service';
 import { Media } from '../../models/media.model';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-video-player',
@@ -53,7 +52,7 @@ export class VideoPlayerComponent implements OnInit {
         }
       });
     });
-
+    
   }
 
   ngOnDestroy() {

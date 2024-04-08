@@ -4,8 +4,8 @@
             <a class="navbar-item" [routerLink]="['/']">
                 <img src="assets/logo-long-no-outline.png">
             </a>
-    
-            <a role="button" class="navbar-burger" data-target="navMenuBtn">
+
+            <a role="button" class="navbar-burger" data-target="navMenuBtn" (click)="showMenu=!showMenu">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -16,3 +16,13 @@
     <div id="navMenuBtn" class="navbar-menu">        
     </div>
 </nav>
+
+<div class="is-flex main">
+    <div class="menu-wrapper" [style.display]="showMenu ? 'inline-block' : 'none'">
+        <app-side-panel (menuItemClicked)="menuItemClicked()"></app-side-panel>
+    </div>
+    
+    <div class="content-wrapper" [style.display]="showMenu ? 'none' : 'inline-block'">
+        <router-outlet></router-outlet>
+    </div>
+</div>

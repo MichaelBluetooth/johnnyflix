@@ -2,3 +2,9 @@
     opacity: .8;
     cursor: pointer;
 }
+
+.media-content {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

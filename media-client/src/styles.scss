@@ -1,4 +1,10 @@
-
+//https://getbootstrap.com/docs/5.0/layout/breakpoints/
+$size-sm: 576px; //smaller than this is a "x-small" device
+$size-sm: 576px; //greater than or euqal to this is a "small" device
+$size-md: 768px; //greater than or euqal to this is a "medium" device
+$size-lg: 992px; //greater than or euqal to this is a "large" device
+$size-xlg: 1200px; //greater than or euqal to this is a "x-large" device
+$size-xxlg: 1400px; ////greater than or euqal to this is a "godzilla-like" device
 
 html,
 body {    
