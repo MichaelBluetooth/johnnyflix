@@ -13,4 +13,13 @@ export class Library extends DefaultEntity {
 
     @OneToMany(() => Media, (mc) => mc.library)
     media: Media[];
+
+    @Column({ type: 'varchar', length: 25, nullable: true })
+    type: string;
+
+    @Column({ type: 'varchar', length: 250, nullable: true })
+    backblazeBucketId: string;
+
+    @Column({ type: 'varchar', length: 250, nullable: true })
+    backblazeBucketName: string;
 }

@@ -6,12 +6,14 @@ import { TranscoderService } from '..\\transcoder\\transcoder.service';
 import { PlayHistoryService } from '..\\play-history\\play-history.service';
 import { FindMediaService } from '..\\find-media\\find-media.service';
 import { SettingsService } from '../settings/settings.service';
+import { B2LibraryService } from '../library/b2-library.service';
 
 @Injectable()
 export class StartupService implements OnApplicationBootstrap {
     private readonly logger = new Logger(StartupService.name);
 
     constructor(
+        private b2librarySvc: B2LibraryService,
         private librarySvc: LibraryService,
         private mediaSvc: MediaService,
         private jobSvc: TranscoderService,
@@ -19,12 +21,13 @@ export class StartupService implements OnApplicationBootstrap {
         private findMediaSvc: FindMediaService,
         private settings: SettingsService) { }
 
-    async onApplicationBootstrap() {               
+    async onApplicationBootstrap() {
         this.logger.debug('BOOSTRAPPING APP');
         this.settings.readSettings();
         //await this.readConfigFile();
-        await this.seedTestData();                
-    }    
+        // await this.seedTestDatalocal();
+        await this.seedTestDataB2();
+    }
 
     async readConfigFile() {
         const existingLibraries = await this.librarySvc.getLibraries();
@@ -53,13 +56,54 @@ export class StartupService implements OnApplicationBootstrap {
                 this.logger.debug(`Creating library: ${libDetail.name}`);
                 await this.librarySvc.createLibrary({
                     name: libDetail.name,
-                    directories: libDetail.directories
+                    directories: libDetail.directories,
+                    type: libDetail.type
                 });
             }
         }
     }
 
-    async seedTestData() {
+    async seedTestDataB2() {
+        this.deleteTestData();
+        this.jobSvc.clearAllJobs();
+
+        const library: Library = await this.b2librarySvc.createLibrary({
+            name: 'Backblaze Movies',
+            directories: [
+                'C:\\Users\\matth\\workspace\\media-app\\media_server_test_data\\movies'
+            ],
+            type: 'backblaze',
+            backblazeBucketId: 'e332d8f9d35bb44e85e90c10',
+            backblazeBucketName: 'JohnnyFlixTest'
+        });
+
+        const parrotMedia = await this.createTestMedia(
+            library.id,
+            'Wings of Friendship',
+            'parrot.mkv',
+            'movies/parrot',
+            ['Happy', 'Colorful', 'Bird'],
+            "A vibrant Scarlett Macaw embarks on a colorful journey to find her flock after getting separated. Along the way, she encounters an array of characters - from wise old owls to playful rabbits and jazz-loving cats. Amidst the challenges, she learns valuable lessons about trust, loyalty, and the true meaning of friendship. As she navigates through the exotic landscapes, even forming an unlikely bond with a gentle crocodile, the Scarlett Macaw discovers that friendship knows no bounds, transcending species and stereotypes. Will she reunite with her flock, or will her newfound friends become her true family?",
+            2025,
+            27000,
+            "parrot.png"
+        );
+        this.playHistory.updatePlayHistory(parrotMedia.id, 5);
+
+        await this.createTestMedia(
+            library.id,
+            'The Running Man',
+            'The.Running.Man.1987.mkv',
+            'movies/The.Running.Man.1987',
+            ['Action', 'Crime', 'Thriller', 'Science Fiction'],
+            "A parody within an action thriller. Ben Richards is an innocent man who is sentenced to the Running Man game show, a futuristic audience participation capital punishment television show. While Ben is running from champions with chainsaws and sharpened hockey sticks, the host is busy with calls to the network about ratings.",
+            1987,
+            6000000,
+            "the.running.man.1987.png"
+        );
+    }
+
+    async seedTestDatalocal() {
         this.deleteTestData();
         this.jobSvc.clearAllJobs();
         this.findMediaSvc.clearAllJobs();
@@ -68,7 +112,8 @@ export class StartupService implements OnApplicationBootstrap {
             name: 'Movies',
             directories: [
                 'C:\\Users\\matth\\workspace\\media-app\\media_server_test_data\\movies'
-            ]
+            ],
+            type: 'local'
         });
 
         const parrotMedia = await this.createTestMedia(
@@ -116,7 +161,7 @@ export class StartupService implements OnApplicationBootstrap {
             ['Action', 'Adventure', 'Thriller', 'Science Fiction'],
             "In this sequel, we're sent back to the battlefield, as the Federation's best mobile infantry unit's are slowly being overpowered by the killer bugs. They're light years from the nearest reinforcements and are trapped on a remote outpost. Though they've set up protection around the post, the enemy's in the outpost, in a way which they never thought of.",
             2004,
-            5460000,                        
+            5460000,
             "Starship.Troopers.2.png"
         );
         await this.createTestMedia(

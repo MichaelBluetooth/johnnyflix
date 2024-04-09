@@ -3,7 +3,7 @@ import { MediaService } from '../services/media/media.service';
 import { TranscoderService } from '../services/transcoder/transcoder.service';
 import { Response } from 'express';
 import { UpdateMediaRequest } from '../dto/update-media.dto';
-import { createReadStream, existsSync } from 'fs';
+import { createReadStream, existsSync, readFileSync } from 'fs';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { HlsVersion } from '../utils/hls-utils';
 import { LibraryService } from '../services/library/library.service';
@@ -13,6 +13,7 @@ import { ParseUpdateMediaBodyPipe } from '../pipes/update-media-body.pipe';
 import { MediaDetails } from '../dto/media-details.dto';
 import { join } from 'path';
 import { ROOT_DIR } from 'src/app_root';
+import { B2 } from '../services/backblaze/backblaze';
 
 @Controller('api/media')
 export class MediaController {
@@ -27,6 +28,18 @@ export class MediaController {
     async listSupportedVersions() {
         return HlsVersion.ALL;
     }
+
+    
+    @Get('B2_TEST')
+    async backblazeTest(){
+        const file: Buffer = readFileSync("C:/Users/matth/Pictures/Back to the Future Collection.jpeg");
+
+        const b2: B2 = new B2('32893b4e59c0', '005f4d210ec2f1e0589670c8af81a44f8f852ada75');
+        await b2.authorize();
+        await b2.uploadFile('e332d8f9d35bb44e85e90c10', 'test/posters/b2_test_poster.jpg', file);
+        return {ok: true};
+    }
+
 
     @Get(':id')
     async getById(@Param('id') id: string) {

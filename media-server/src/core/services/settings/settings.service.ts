@@ -25,7 +25,14 @@ export class SettingsService {
         return new Set(this.appConfig.default_versions);
     }
 
-    get defaultLibraries(): { name: string, directories: string[] }[] {
+    get defaultLibraries(): { name: string, directories: string[], type: 'backblaze' | 'local' }[] {
         return this.appConfig.libraries;
+    }
+
+    get backblazeConfig(): { keyID: string, applicationKey: string } {
+        return {
+            keyID: process.env.BACKBLAZE_KEYID,
+            applicationKey: process.env.BACKBLAZE_APPLICATIONKEY
+        }
     }
 }

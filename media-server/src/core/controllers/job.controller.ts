@@ -24,5 +24,4 @@ export class JobController {
         this.transcodeSvc.cancelJob(id);
         this.findMediaSvc.cancelJob(id);
     }
-
 }

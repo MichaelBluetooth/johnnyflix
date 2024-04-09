@@ -204,7 +204,7 @@ export class MediaService {
         writeFileSync(fullPosterPath, file.buffer);
 
         media.availablePosters = [...new Set(media.availablePosters.concat([fileName]))];
-        this.mediaRepo.save(media);
+        this.mediaRepo.save(media)
     }
 
     findMediaByFileNameAndPath(name: string, path: string) {

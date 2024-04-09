@@ -22,6 +22,8 @@ import { TranscoderConsumer } from './consumers/transcoder.consumer';
 import { TMDBService } from './services/tmdb/tmdb.service';
 import { SettingsService } from './services/settings/settings.service';
 import { ImageController } from './controllers/image.controller';
+import { BackblazeService } from './services/backblaze/backblaze.service';
+import { B2LibraryService } from './services/library/b2-library.service';
 
 @Module({
   imports: [
@@ -52,7 +54,9 @@ import { ImageController } from './controllers/image.controller';
     TranscoderConsumer,
     FindMediaConsumer,
     TMDBService,
-    SettingsService
+    SettingsService,
+    BackblazeService,
+    B2LibraryService
   ],
   controllers: [
     VideoController,
