@@ -1,0 +1,88 @@
+@import '../../../../../../src/styles.scss';
+
+.tag {
+    color: #14161A;;
+    background-color: #B71551;
+}
+
+.play-btn {
+    color: #14161A;
+    background-color: #B71551;
+}
+
+@media only screen and (max-width: $size-lg) {
+    .media-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .media-image {
+        width: 33%;
+        height: calc(33% / .666);
+    }
+
+    .media-details {
+        width: 60%;
+    }
+    
+    .media-description-lg {
+        display: none;
+    }
+
+    .media-description-sm {
+        display: block;
+    }
+
+    .media-title {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .media-subtitle {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+}
+
+@media only screen and (min-width: $size-lg) {
+    .media-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .media-image {
+        width: 300px;
+        height: calc(300px / .666);
+    }
+
+    .media-details {
+        width: calc(100% - 350px);
+    }
+    
+    .media-description-lg {
+        display: block;
+    }
+
+    .media-description-sm {
+        display: none;
+    }
+
+    .media-title {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .media-subtitle {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+}
+

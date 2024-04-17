@@ -1,0 +1,59 @@
+@import '../../../../../../src/styles.scss';
+
+$header-height: 52px;
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.main {
+    display: flex;
+    height: 100%;
+    height: calc(100% - $header-height);
+}
+
+.content-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow-y: auto;
+}
+
+@media only screen and (max-width: $size-lg) {
+    .main {
+        height: 100%;
+    }
+
+    .menu-wrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .content-wrapper {
+        height: calc(100% - $header-height);
+        overflow-x: hidden;
+    }
+}
+
+@media only screen and (min-width: $size-lg) {
+    .main {
+        height: calc(100% - $header-height);
+    }
+
+    .menu-wrapper {
+        display: inline-block !important;
+        width: 20%;
+        height: 100%;
+    }
+
+    .content-wrapper {
+        // width: 100%;        
+        overflow-y: auto;
+        padding-left: 15px;
+        padding-right: 15px;    
+    }
+}

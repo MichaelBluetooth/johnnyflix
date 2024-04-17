@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MediaService } from '../../services/media.service';
 import { Media } from '../../models/media.model';
-import { DurationToStringPipe } from '../../pipes/duration-to-string.pipe';
-import { MediaImagePipe } from '../../pipes/media-image.pipe';
+import { MediaViewComponent } from 'jflix-components';
 
 @Component({
   selector: 'app-media-container',
@@ -12,8 +11,7 @@ import { MediaImagePipe } from '../../pipes/media-image.pipe';
   imports: [
     CommonModule,
     RouterModule,
-    DurationToStringPipe,
-    MediaImagePipe
+    MediaViewComponent
   ],
   templateUrl: './media-container.component.html',
   styleUrl: './media-container.component.scss'

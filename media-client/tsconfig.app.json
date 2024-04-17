@@ -9,6 +9,7 @@
     "src/main.ts"
   ],
   "include": [
+    "src/app/test.json",
     "src/**/*.d.ts"
   ]
 }

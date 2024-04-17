@@ -1,0 +1,19 @@
+<button class="button" (click)="scanLibraryFiles()">Scan Library Files</button>
+
+<div class="modal is-active" *ngIf="showModal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Scan Launched</p>
+            <button class="delete" (click)="showModal = false"></button>
+        </header>
+        <section class="modal-card-body">
+            <p>Libraries will now be scanned for new content!</p>
+        </section>
+        <footer class="modal-card-foot">
+            <div class="buttons">
+                <button class="button is-success" (click)="showModal = false">Ok</button>
+            </div>
+        </footer>
+    </div>
+</div>

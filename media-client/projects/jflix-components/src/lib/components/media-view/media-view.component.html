@@ -1,0 +1,55 @@
+<div class="media-wrapper">
+    <img class="media-image" [src]="media.id | mediaImage:media.posterFileName" alt="Placeholder image">
+
+    <div class="media-details">
+        <div class="media-title-content">
+            <div class="media-title">{{media.name}}</div>
+            <div class="media-subtitle" *ngIf="media.releaseYear || media.duration">
+                <span class="pr-5" *ngIf="media.releaseYear">
+                    {{media.releaseYear}}
+                </span>
+                <span *ngIf="media.duration">
+                    {{media.duration | durationToString}}
+                </span>
+            </div>
+
+            <div class="media-tags" *ngIf="media.tags">
+                <ng-container *ngFor="let tag of media.tags">
+                    <span class="tag mr-2">{{tag}}</span>
+                </ng-container>
+            </div>
+        </div>
+        
+        <div class="media-buttons mt-4">
+            <a class="button play-btn mr-4" [routerLink]="['/watch', media.id]">
+                <span class="icon is-small">
+                    <i class="bi bi-play"></i>
+                </span>
+                <span>Play</span>
+            </a>
+
+            <button class="button mr-4" (click)="edit()">
+                <span class="icon is-small">
+                    <i class="bi bi-pencil"></i>
+                </span>
+                <span>Edit</span>
+            </button>
+        </div>
+
+        <div class="media-description-lg mt-2" *ngIf="media.description">
+            <p>
+                {{media.description}}
+            </p>
+        </div>
+    </div>
+
+    <div class="media-description-sm mt-2" *ngIf="media.description">
+        <p>
+            {{media.description}}
+        </p>
+    </div>
+</div>
+
+
+<div #container>
+</div>

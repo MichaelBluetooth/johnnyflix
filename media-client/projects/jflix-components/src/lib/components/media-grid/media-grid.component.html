@@ -1,0 +1,15 @@
+<div class="media-wrapper">
+    <div class="media-container" *ngFor="let media of mediaList">
+        <a [routerLink]="['/watch', media.id]">
+            <img class="media-image" [src]="media.id | mediaImage:media.posterFileName">
+        </a>
+        <a [routerLink]="['/media', media.id]">
+            <div class="media-title">
+                {{media.name}}
+            </div>
+        </a>
+        <div class="media-release-year">
+            {{media.releaseYear}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="wrapper">
+    <h1 class="title is-1">Jobs</h1>
+  
+    <div class="table-container">
+      <table class="table is-striped is-full-width">
+        <thead>
+          <tr>
+            <th>Job ID</th>
+            <th class="job-col">Job</th>
+            <th class="status-col">Status</th>
+            <th class="start-date-col">Started Date</th>
+            <th class="complete-date-col">Completed Date</th>
+            <th class="fail-reason-col">Failed Reason</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let job of jobs">
+            <td>{{job.id}}</td>
+            <td>
+              <ng-container *ngIf="transcodeData(job) as data">
+                <span>
+                  {{data.versionName | mediaVersionName}}
+                </span>
+                <a [routerLink]="['/media', data.mediaId]">
+                  {{data.mediaName}}
+                </a>
+              </ng-container>
+              <ng-container *ngIf="scanLibraryFilesData(job) as data">
+                Scan Library Files
+                <a [routerLink]="['/library', data.libraryId]">
+                  {{data.libraryName}}
+                </a>
+              </ng-container>
+            </td>
+            <td>
+              <span [class]="job.status | statusTag">
+                {{job.status}}
+              </span>
+            </td>
+            <td>
+              {{job.startedDate | date: 'short'}}
+            </td>
+            <td>
+              {{job.completedDate | date: 'short'}}
+            </td>
+            <td width="550px">
+              {{job.failedReason}}
+            </td>
+            <td>
+              <button class="button is-warning" title="Cancel job" *ngIf="job.status !== 'completed' && job.status !== 'active'" (click)="cancelJob(job.id)">
+                <i class="bi bi-x-circle-fill"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

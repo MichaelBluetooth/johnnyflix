@@ -6,16 +6,16 @@ import { MediaContainerComponent } from './components/media-container/media-cont
 import { mediaResolver } from './resolvers/media.resolver';
 import { JobsListComponent } from './components/jobs-list/jobs-list.component';
 import { jobsResolver } from './resolvers/jobs.resolver';
-import { RecentlyPlayedListComponent } from './components/recently-played-list/recently-played-list.component';
-import { recentlyPlayedResolver } from './resolvers/recently-played.resolver';
+import { HomeComponent } from './components/home/home.component';
+import { homeResolver } from './resolvers/home.resolver';
 
 export const routes: Routes = [
     {
         path: '',
-        component: RecentlyPlayedListComponent,
+        component: HomeComponent,
         runGuardsAndResolvers: 'always',
         resolve: {
-            media: recentlyPlayedResolver
+            media: homeResolver
         }
     },
     {

@@ -1,0 +1,81 @@
+@import '../../../../../../src/styles.scss';
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.media-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.media-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.media-container {
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    overflow: hidden;
+}
+
+.media-image {
+    border: 5px solid transparent;
+}
+
+.media-image:hover {
+    cursor: pointer;
+    border: 5px solid #B21B54;
+}
+
+.media-title {
+    font-weight: bold;
+}
+
+.media-title:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+@media only screen and (max-width: $size-lg) {
+    .media-wrapper {
+        margin-left: 10px;
+        margin-right: 10px;
+        gap: 10px;
+    }
+
+    .media-container {
+        width: 30%;
+    }
+
+    .media-image {
+        // width: 120px;
+        height: 180px;
+        border: 5px solid transparent;
+    }
+}
+
+@media only screen and (min-width: $size-lg) {
+    
+    .media-wrapper {
+        // margin-left: 20px;
+        // margin-right: 20px;
+    }
+
+    .media-container {
+        width: 15%;
+        display: flex;
+        flex-direction: column;
+        justify-self: center;
+    }
+
+    .media-image {
+        // width: 200px;
+        height: 325px;
+    }
+}

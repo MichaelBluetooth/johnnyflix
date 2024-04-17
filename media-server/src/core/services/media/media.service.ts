@@ -33,6 +33,7 @@ export class MediaService {
         media.duration = data.duration;
         media.posterFileName = data.posterFileName;
         media.availablePosters = data.availablePosters;
+        media.dateAdded = data.dateAdded || new Date();
         return this.mediaRepo.save(media);
     }
 
@@ -55,6 +56,7 @@ export class MediaService {
         media.availablePosters = data.posterFileNames;
         media.fileName = data.fileName;
         media.path = `${directory.path}/${HlsUtils.getSafeFolderName(data.fileName)}`;
+        media.dateAdded = new Date();
 
         media = await this.mediaRepo.save(media);
 
@@ -155,7 +157,8 @@ export class MediaService {
             lastPlayed: media.playHistory?.length ? media.playHistory[0].lastPlayed : null,
             lastPosition: media.playHistory?.length ? media.playHistory[0].position : 0,
             versions: versions,
-            posters: posters
+            posters: posters,
+            dateAdded: media.dateAdded
         }
         return dto;
     }
@@ -209,5 +212,29 @@ export class MediaService {
 
     findMediaByFileNameAndPath(name: string, path: string) {
         return this.mediaRepo.findOneBy({ fileName: name, path: path });
+    }
+
+    async getRecentlyAdded(limit: number = 10){
+        const recentlyAdded = await this.mediaRepo.createQueryBuilder('m')
+            .innerJoinAndSelect('m.library', 'lib')
+            .orderBy('m.dateAdded', 'DESC')
+            .limit(limit)
+            .getMany();
+        
+        return recentlyAdded.map(media => {
+            return this.mediaToDto(media);
+        });
+    }
+
+    async getRecentlyReleased(limit: number = 10){
+        const recentlyAdded = await this.mediaRepo.createQueryBuilder('m')
+            .innerJoinAndSelect('m.library', 'lib')
+            .orderBy('m.releaseYear', 'DESC')
+            .limit(limit)
+            .getMany();
+        
+        return recentlyAdded.map(media => {
+            return this.mediaToDto(media);
+        });
     }
 }

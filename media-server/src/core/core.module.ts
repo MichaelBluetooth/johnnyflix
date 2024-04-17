@@ -22,6 +22,7 @@ import { TranscoderConsumer } from './consumers/transcoder.consumer';
 import { TMDBService } from './services/tmdb/tmdb.service';
 import { SettingsService } from './services/settings/settings.service';
 import { ImageController } from './controllers/image.controller';
+import { HomeController } from './controllers/home.controller';
 
 @Module({
   imports: [
@@ -60,7 +61,8 @@ import { ImageController } from './controllers/image.controller';
     MediaController,
     JobController,
     PlayHistoryController,
-    ImageController
+    ImageController,
+    HomeController
   ],
 })
 export class CoreModule { }

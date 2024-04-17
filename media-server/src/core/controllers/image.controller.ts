@@ -14,6 +14,7 @@ export class ImageController {
 
     @Get(':mediaId/poster/:name')
     async getPoster(@Param('mediaId') mediaId: string, @Param('name') name: string, @Res({ passthrough: true }) res: Response) {
+        this.logger.debug(`Getting poster ${name} for media ${mediaId}`);
         const posterPath = await this.mediaSvc.getPosterPath(+mediaId, name);
         if (existsSync(posterPath)) {
             const file = createReadStream(posterPath);

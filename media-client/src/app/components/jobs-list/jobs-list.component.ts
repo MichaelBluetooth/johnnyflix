@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ActivatedRoute, Data, Router, RouterModule } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Component, Input } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { StatusTagPipe } from '../../pipes/status-tag.pipe';
 import { Job, ScanLibraryFilesJobData, TranscodeJobData } from '../../models/job.model';
 import { MediaVersionNamePipe } from '../../pipes/media-version-name.pipe';
 import { JobService } from '../../services/job.service';
+import { JobData } from '../../../../dist/jflix-components/lib/models/job.model';
 
 @Component({
   selector: 'app-jobs-list',
@@ -20,19 +20,7 @@ import { JobService } from '../../services/job.service';
   styleUrl: './jobs-list.component.scss'
 })
 export class JobsListComponent {
-  jobs$: Observable<Job<ScanLibraryFilesJobData | TranscodeJobData>[]> = this.route.data.pipe(map((d: Data) => {
-    const jobs: Job<ScanLibraryFilesJobData | TranscodeJobData>[] = d['jobs'];
-    jobs.sort((a, b) => {
-      if (a.startedDate === null && b.startedDate !== null) {
-        return -1;
-      } else if (b.startedDate === null && a.startedDate !== null) {
-        return 1;
-      } else {
-        return a.startedDate > b.startedDate ? -1 : 1
-      }
-    });
-    return jobs;
-  }));
+  @Input() jobs: Job<JobData>[] = [];
 
   constructor(private route: ActivatedRoute, private jobSvc: JobService, private router: Router) { }
 
@@ -46,8 +34,9 @@ export class JobsListComponent {
 
   cancelJob(id: string){
     this.jobSvc.cancel(id).subscribe(() => {
-      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-        this.router.navigate(['/jobs']);
+      const currentUrl = this.router.url;
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate([currentUrl]);
       });
     });
   }

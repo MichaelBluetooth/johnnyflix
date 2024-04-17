@@ -95,6 +95,128 @@
           }
         }
       }
+    },
+    "jflix-components": {
+      "projectType": "library",
+      "root": "projects/jflix-components",
+      "sourceRoot": "projects/jflix-components/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/jflix-components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/jflix-components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/jflix-components/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/jflix-components/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    },
+    "johnnyflix-mobile": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/johnnyflix-mobile",
+      "sourceRoot": "projects/johnnyflix-mobile/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/johnnyflix-mobile",
+            "index": "projects/johnnyflix-mobile/src/index.html",
+            "browser": "projects/johnnyflix-mobile/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/johnnyflix-mobile/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/johnnyflix-mobile/src/favicon.ico",
+              "projects/johnnyflix-mobile/src/assets",
+              "projects/johnnyflix-mobile/src/manifest.webmanifest"
+            ],
+            "styles": [
+              "projects/johnnyflix-mobile/src/styles.scss",
+              "node_modules/video.js/dist/video-js.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "node_modules/bulma/css/bulma.min.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "johnnyflix-mobile:build:production"
+            },
+            "development": {
+              "buildTarget": "johnnyflix-mobile:build:development",
+              "proxyConfig": "src/proxy.conf.json"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "johnnyflix-mobile:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/johnnyflix-mobile/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/johnnyflix-mobile/src/favicon.ico",
+              "projects/johnnyflix-mobile/src/assets",
+              "projects/johnnyflix-mobile/src/manifest.webmanifest"
+            ],
+            "styles": [
+              "projects/johnnyflix-mobile/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
     }
   }
 }

@@ -1,0 +1,27 @@
+<h1 class="title is-3">{{title}}</h1>
+
+<div class="scrollable-row">
+    <div class="scroll-btn-container" (click)="scrollLeft()">
+        <i class="bi bi-chevron-compact-left"></i>
+    </div>
+
+    <div class="media-container-wrapper" #scrollable>
+        <div class="media-container" *ngFor="let media of mediaList">
+            <a [routerLink]="['/watch', media.id]">
+                <img class="media-image" [src]="media.id | mediaImage:media.posterFileName" alt="Placeholder image">
+            </a>
+            <a [routerLink]="['/media', media.id]">
+                <div class="media-title">
+                    {{media.name}}
+                </div>
+            </a>
+            <div class="media-release-year">
+                {{media.releaseYear}}
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-btn-container" (click)="scrollRight()">
+        <i class="bi bi-chevron-compact-right"></i>
+    </div>
+</div>

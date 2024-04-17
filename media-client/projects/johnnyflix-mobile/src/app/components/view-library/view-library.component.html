@@ -1,0 +1,10 @@
+<div class="title-wrapper">
+    <div>
+        <h1 class="title is-1">{{library.name}}</h1>
+    </div>
+    <div class="scan-libary-container">
+        <jflix-scan-library-files-btn [libraryId]="library.id"></jflix-scan-library-files-btn>
+    </div>
+</div>
+
+<jflix-media-grid [mediaList]="library.media"></jflix-media-grid>

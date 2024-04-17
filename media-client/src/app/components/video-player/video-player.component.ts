@@ -3,6 +3,7 @@ import { ActivatedRoute, Data } from '@angular/router';
 import videojs from 'video.js';
 import { PlayHistoryService } from '../../services/play-history.service';
 import { Media } from '../../models/media.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-video-player',
@@ -30,7 +31,7 @@ export class VideoPlayerComponent implements OnInit {
     this.media = this.route.snapshot.data['media'];
 
     this.options.sources.push({
-      src: `${window.location.origin}/api/video/${this.media.id}/manifest.m3u8`,
+      src: `${environment.baseUrl}api/video/${this.media.id}/manifest.m3u8`,
       type: 'application/x-mpegURL'
     });
     this.player = videojs(this.target.nativeElement, this.options, () => {

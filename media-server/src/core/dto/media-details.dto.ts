@@ -1,6 +1,7 @@
 export interface MediaDetails {
     id: number;
     name: string;
+    dateAdded: Date;
     tags?: string[];
     description?: string;
     duration?: number;

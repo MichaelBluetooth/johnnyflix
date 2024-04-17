@@ -20,6 +20,8 @@ export class Media extends DefaultEntity {
     @ManyToOne(() => Library, (lib) => lib.media, { nullable: false })
     library: Library;
 
+    @Column({ type: 'timestamptz', nullable: false})
+    dateAdded: Date;
     
     @OneToMany(() => PlayHistory, (ph) => ph.media)
     playHistory: PlayHistory[];

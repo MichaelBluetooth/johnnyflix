@@ -4,8 +4,8 @@ import { Controller, Get, Res } from '@nestjs/common';
 export class AppController {
   constructor() {}
 
-  @Get()
-  redirect(@Res() res) {
-    return res.redirect('/client');
-  }
+  // @Get()
+  // redirect(@Res() res) {
+  //   return res.redirect('/client');
+  // }
 }

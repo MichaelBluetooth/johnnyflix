@@ -1,3 +1,4 @@
 export const environment = {
-    isProd: true
+    isProd: true,
+    baseUrl: 'http://10.189.81.136:3000/'
 };

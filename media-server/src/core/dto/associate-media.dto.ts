@@ -3,6 +3,8 @@ export interface AssociateMediaRequest {
     name: string;
     fileName: string;
     filePath: string;
+    
+    dateAdded?: Date;
 
     tags?: string[];
     description?: string;

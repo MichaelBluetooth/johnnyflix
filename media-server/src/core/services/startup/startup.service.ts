@@ -23,7 +23,7 @@ export class StartupService implements OnApplicationBootstrap {
         this.logger.debug('BOOSTRAPPING APP');
         this.settings.readSettings();
         //await this.readConfigFile();
-        await this.seedTestData();                
+        await this.seedTestData();
     }    
 
     async readConfigFile() {
@@ -80,66 +80,72 @@ export class StartupService implements OnApplicationBootstrap {
             "A vibrant Scarlett Macaw embarks on a colorful journey to find her flock after getting separated. Along the way, she encounters an array of characters - from wise old owls to playful rabbits and jazz-loving cats. Amidst the challenges, she learns valuable lessons about trust, loyalty, and the true meaning of friendship. As she navigates through the exotic landscapes, even forming an unlikely bond with a gentle crocodile, the Scarlett Macaw discovers that friendship knows no bounds, transcending species and stereotypes. Will she reunite with her flock, or will her newfound friends become her true family?",
             2025,
             27000,
-            "parrot.png"
+            "parrot.png",
+            new Date(2025, 1, 5)
         );
         this.playHistory.updatePlayHistory(parrotMedia.id, 5);
 
         const dredd1995Media = await this.createTestMedia(
             library.id,
             'Judge Dredd (1995)',
-            'Judge.Dredd.1995.mkv',
+            'Judge.Dredd_1995.mkv',
             'C:\\Users\\matth\\workspace\\media-app\\media_server_test_data\\movies\\Judge.Dredd.1995',
             ['Science Fiction', 'Action', 'Crime', 'Thriller'],
             "In a dystopian future, Joseph Dredd, the most famous Judge (a police officer with instant field judiciary powers), is convicted for a crime he did not commit and must face his murderous counterpart.",
             1995,
             5760000,
-            "dredd.png"
+            "dredd.png",
+            new Date(2023, 1, 2)
         );
         this.playHistory.updatePlayHistory(dredd1995Media.id, 3582);
 
         await this.createTestMedia(
             library.id,
             'Judge Dredd (2012)',
-            'Dredd.2012.1080p.BluRay.x264.mp4',
+            'Dredd_2012_1080p.BluRay.x264.mp4',
             'C:\\Users\\matth\\workspace\\media-app\\media_server_test_data\\movies\\Dredd.2012',
             ['Action', 'Science Fiction', 'Crime'],
             "In a violent, futuristic city where the police have the authority to act as judge, jury and executioner, a cop teams with a trainee to take down a gang that deals the reality-altering drug, SLO-MO.",
             2012,
             5700000,
-            "dredd.png"
+            "dredd.png",
+            new Date(2023, 1, 5)
         );
         await this.createTestMedia(
             library.id,
             'Starhip Troopers 2: Hero of the Federation',
-            'Starship.Troopers.2.Hero.Of.The.Federation.2004.1080p.BluRay.x265.mp4',
+            'Starship.Troopers.2.Hero.Of.The.Federation_2004_1080p.BluRay.x265.mp4',
             'C:\\Users\\matth\\workspace\\media-app\\media_server_test_data\\movies\\Starship.Troopers.2.Hero.Of.The.Federation.2004',
             ['Action', 'Adventure', 'Thriller', 'Science Fiction'],
             "In this sequel, we're sent back to the battlefield, as the Federation's best mobile infantry unit's are slowly being overpowered by the killer bugs. They're light years from the nearest reinforcements and are trapped on a remote outpost. Though they've set up protection around the post, the enemy's in the outpost, in a way which they never thought of.",
             2004,
             5460000,                        
-            "Starship.Troopers.2.png"
+            "Starship.Troopers.2.png",
+            new Date(2023, 1, 15)
         );
         await this.createTestMedia(
             library.id,
             'Starship Troopers',
-            'Starship.Troopers.1997.1080p.BluRay.x264.mp4',
+            'Starship.Troopers_1997_1080p.BluRay.x264.mp4',
             'C:\\Users\\matth\\workspace\\media-app\\media_server_test_data\\movies\\Starship.Troopers.1997',
             ['Action', 'Adventure', 'Thriller', 'Science Fiction'],
             "Set in the future, the story follows a young soldier named Johnny Rico and his exploits in the Mobile Infantry. Rico's military career progresses from recruit to non-commissioned officer and finally to officer against the backdrop of an interstellar war between mankind and an arachnoid species known as \"the Bugs\".",
             1997,
             7740000,
-            "startship.troopers.1997.png"
+            "startship.troopers.1997.png",
+            new Date(2023, 2, 24)
         );
         await this.createTestMedia(
             library.id,
             'The Running Man',
-            'The.Running.Man.1987.mkv',
+            'The.Running.Man_1987.mkv',
             'C:\\Users\\matth\\workspace\\media-app\\media_server_test_data\\movies\\The.Running.Man.1987',
             ['Action', 'Crime', 'Thriller', 'Science Fiction'],
             "A parody within an action thriller. Ben Richards is an innocent man who is sentenced to the Running Man game show, a futuristic audience participation capital punishment television show. While Ben is running from champions with chainsaws and sharpened hockey sticks, the host is busy with calls to the network about ratings.",
             1987,
             6000000,
-            "the.running.man.1987.png"
+            "the.running.man.1987.png",
+            new Date(2023, 5, 12)
         );
         this.logger.debug('Test Data Created');
     }
@@ -153,7 +159,8 @@ export class StartupService implements OnApplicationBootstrap {
         description: string,
         releaseYear: number,
         duration: number,
-        poster: string) {
+        poster: string,
+        dateAdded: Date) {
         return await this.mediaSvc.associateMedia({
             libraryId: libraryId,
             name: name,
@@ -164,7 +171,8 @@ export class StartupService implements OnApplicationBootstrap {
             releaseYear: releaseYear,
             duration: duration,
             posterFileName: poster,
-            availablePosters: [poster]
+            availablePosters: [poster],
+            dateAdded: dateAdded
         });
     }
 

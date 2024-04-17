@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let job of (jobs$ | async)">
+        <tr *ngFor="let job of jobs">
           <td>{{job.id}}</td>
           <td>
             <ng-container *ngIf="transcodeData(job) as data">

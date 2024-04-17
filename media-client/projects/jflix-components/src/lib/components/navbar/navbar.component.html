@@ -1,0 +1,28 @@
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <ng-container>
+        <div class="navbar-brand">
+            <a class="navbar-item" [routerLink]="['/']">
+                <img src="assets/logo-long-no-outline.png">
+            </a>
+
+            <a role="button" class="navbar-burger" data-target="navMenuBtn" (click)="showMenu=!showMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>        
+    </ng-container>
+
+    <div id="navMenuBtn" class="navbar-menu">        
+    </div>
+</nav>
+
+<div class="is-flex main">
+    <div class="menu-wrapper" [style.display]="showMenu ? 'inline-block' : 'none'">
+        <jflix-side-panel (menuItemClicked)="menuItemClicked()"></jflix-side-panel>
+    </div>
+    
+    <div class="content-wrapper" [style.display]="showMenu ? 'none' : 'inline-block'">
+        <router-outlet></router-outlet>
+    </div>
+</div>

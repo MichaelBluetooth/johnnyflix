@@ -6,7 +6,11 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+
+    "build:mobile": "ng build johnnyflix-mobile",
+    "build:components": "ng build jflix-components",
+    "build:android": "npm run build:components & npm run build:mobile & npx cap copy android"
   },
   "private": true,
   "dependencies": {
@@ -18,6 +22,13 @@
     "@angular/platform-browser": "^17.2.0",
     "@angular/platform-browser-dynamic": "^17.2.0",
     "@angular/router": "^17.2.0",
+    "@capacitor/android": "^5.7.4",
+    "@capacitor/app": "^5.0.7",
+    "@capacitor/cli": "^5.7.4",
+    "@capacitor/core": "^5.7.4",
+    "@capacitor/dialog": "^5.0.7",
+    "@capacitor/status-bar": "^5.0.7",
+    "@capgo/capacitor-navigation-bar": "^6.0.12",
     "@videojs/http-streaming": "^3.10.0",
     "bootstrap-icons": "^1.11.3",
     "bulma": "^1.0.0",
@@ -29,6 +40,7 @@
     "@angular-devkit/build-angular": "^17.2.3",
     "@angular/cli": "^17.2.3",
     "@angular/compiler-cli": "^17.2.0",
+    "@capacitor/assets": "^3.0.5",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
@@ -36,6 +48,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "ng-packagr": "^17.3.0",
     "typescript": "~5.3.2"
   }
 }

@@ -2,10 +2,17 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { readFileSync } from 'fs';
 
 async function bootstrap() {
+  // const httpsOptions = {
+  //   key: readFileSync('./security/cert.key'),
+  //   cert: readFileSync('./security/cert.pem'),
+  // };
+
   const app = await NestFactory.create(AppModule, {
-    logger: ['log', 'fatal', 'error', 'warn', 'debug', 'verbose']
+    logger: ['log', 'fatal', 'error', 'warn', 'debug', 'verbose'],
+    // httpsOptions: httpsOptions
   });
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, transform: true })
@@ -24,6 +31,7 @@ async function bootstrap() {
     }
   });
 
+  app.enableCors();
   await app.listen(3000);
 }
 bootstrap();

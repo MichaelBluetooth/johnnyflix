@@ -1,0 +1,40 @@
+@import '../../../node_modules/bulma/css/bulma.min.css';
+
+//https://getbootstrap.com/docs/5.0/layout/breakpoints/
+$size-sm: 576px; //smaller than this is a "x-small" device
+$size-sm: 576px; //greater than or euqal to this is a "small" device
+$size-md: 768px; //greater than or euqal to this is a "medium" device
+$size-lg: 992px; //greater than or euqal to this is a "large" device
+$size-xlg: 1200px; //greater than or euqal to this is a "x-large" device
+$size-xxlg: 1400px; ////greater than or euqal to this is a "godzilla-like" device
+
+html,
+body {    
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+html {
+    overflow-y: auto !important; //idk why bulma sets this to "scroll"
+}
+
+.full {
+    height: 100%;
+    width: 100%;
+}
+
+.full-h {
+    height: 100%;
+}
+
+.full-w {
+    width: 100%;
+}
+
+.dbug {
+    border: 2px solid red;
+}
+

@@ -1,4 +1,4 @@
-<div class="wrapper">
+<!-- <div class="wrapper">
     <div class="image-wrapper">
         <img class="image" [src]="media.id | mediaImage:media.posterFileName" alt="Placeholder image">
     </div>
@@ -24,7 +24,7 @@
                 <p>
                     {{media.description}}
                 </p>
-            </div>
+            </div>            
     
             <div class="mt-5">
                 <a class="button is-primary mr-4" [routerLink]="['/watch', media.id]">
@@ -43,55 +43,9 @@
             </div>
         </div>
     </div>
-</div>
-
-<!-- <div class="wrapper">
-    <div class="main-content">
-        <div class="content columns full-h">
-            <div class="column is-one-fifth">
-                <img class="image is-2by3" [src]="media.id | mediaImage:media.posterFileName" alt="Placeholder image" style="height: 400px;">
-            </div>
-            <div class="column">
-                <p class="title is-1">{{media.name}}</p>
-                <p class="subtitle is-3" *ngIf="media.releaseYear || media.duration">
-                    <span class="pr-5" *ngIf="media.releaseYear">
-                        {{media.releaseYear}}
-                    </span>
-                    <span *ngIf="media.duration">
-                        {{media.duration | durationToString}}
-                    </span>
-                </p>
-        
-                <div *ngIf="media.tags">
-                    <ng-container *ngFor="let tag of media.tags">
-                        <span class="tag is-primary mr-2">{{tag}}</span>
-                    </ng-container>
-                </div>
-        
-                <div class="mt-2" *ngIf="media.description">
-                    <p>
-                        {{media.description}}
-                    </p>
-                </div>
-        
-                <div class="mt-5">
-                    <a class="button is-primary mr-4" [routerLink]="['/watch', media.id]">
-                        <span class="icon is-small">
-                            <i class="bi bi-play"></i>
-                        </span>
-                        <span>Play</span>
-                    </a>
-        
-                    <button class="button is-light mr-4" (click)="edit()">
-                        <span class="icon is-small">
-                            <i class="bi bi-pencil"></i>
-                        </span>
-                        <span>Edit</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div> -->
+
+<jflix-media-view [media]="media"></jflix-media-view>
+
 <div #container>
 </div>

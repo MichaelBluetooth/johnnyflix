@@ -1,11 +1,12 @@
-import { APP_INITIALIZER, ApplicationConfig } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
 import { provideRouter, withRouterConfig } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { MediaService } from './services/media.service';
 import { APP_BASE_HREF } from '@angular/common';
-import { environment } from '../environments/environment';
+import { urlInterceptor } from './interceptors/url.interceptor';
+import { withModule } from '@angular/core/testing';
 
 
 export function initializeApp(media: MediaService) {
@@ -19,7 +20,8 @@ export function initializeApp(media: MediaService) {
 export const appConfig: ApplicationConfig = {
   providers: [
     {
-      provide: APP_BASE_HREF, useValue: environment.isProd ? '/client' : '/'
+      // provide: APP_BASE_HREF, useValue: environment.isProd ? '/client' : '/'
+      provide: APP_BASE_HREF, useValue: '/'
     },
     provideRouter(
       routes,
@@ -27,11 +29,12 @@ export const appConfig: ApplicationConfig = {
         onSameUrlNavigation: 'reload'
       })
     ),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([urlInterceptor])),
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
       multi: true,
       deps: [MediaService],
-    },]
+    },
+  ]
 };

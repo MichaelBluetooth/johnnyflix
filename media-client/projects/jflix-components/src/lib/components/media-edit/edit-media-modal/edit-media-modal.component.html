@@ -1,0 +1,39 @@
+<div class="modal is-active">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">{{media?.name ? 'Edit' : 'Create'}} Media</p>
+            <button class="delete" (click)="close.emit()"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="tabs">
+                <ul>
+                    <li [class.is-active]="tab === 'details'" (click)="tab = 'details'">
+                        <a>General</a>
+                    </li>
+                    <li [class.is-active]="tab === 'poster'" (click)="tab = 'poster'">
+                        <a>
+                            Poster
+                        </a>
+                    </li>
+                    <li [class.is-active]="tab === 'optimization'" (click)="tab = 'optimization'">
+                        <a>Optimization</a>
+                    </li>
+                </ul>
+            </div>
+
+            <form [formGroup]="form">
+                <jflix-media-form [style.display]="tab ==='details' ? 'block' : 'none'" [form]="form" (fileUploaded)="file=$event"></jflix-media-form>
+                <jflix-media-poster-selector [style.display]="tab ==='poster' ? 'block' : 'none'" [media]="media"
+                    (posterSelected)="selectedPoster=$event" (fileUploaded)="posterUploaded($event)"></jflix-media-poster-selector>
+                <jflix-media-optimization [style.display]="tab ==='optimization' ? 'block' : 'none'" formControlName="versions"></jflix-media-optimization>
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+            <div class="buttons">
+                <button class="button is-success" [disabled]="form.invalid" (click)="saveChanges()">Save changes</button>
+                <button class="button" (click)="close.emit()">Cancel</button>
+            </div>
+        </footer>
+    </div>
+</div>

@@ -21,9 +21,9 @@ import { join } from 'path';
       synchronize: true,
       // logging: true, //Enable me for verbose DB queries
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '.', 'client')
-    }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(__dirname, '.', 'client')
+    // }),
     CoreModule,
     CacheModule.register({
       isGlobal: true,

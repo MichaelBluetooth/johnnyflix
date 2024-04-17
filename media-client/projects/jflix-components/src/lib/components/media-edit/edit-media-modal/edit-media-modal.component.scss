@@ -1,0 +1,13 @@
+@import '../../../../../../../src/styles.scss';
+
+@media only screen and (max-width: $size-lg) {
+    .modal-card {
+        height: 100%;
+    }
+}
+
+@media only screen and (min-width: $size-md) {
+    .modal-card {
+        height: 88%;
+    }
+}

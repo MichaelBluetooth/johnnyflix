@@ -7,6 +7,7 @@ import { MediaImagePipe } from '../../pipes/media-image.pipe';
 import { toGroupsOfSize } from '../../utils/to-groups-of-size';
 import { MediaService } from '../../services/media.service';
 import { Media } from '../../models/media.model';
+import { MediaGridComponent } from 'jflix-components';
 
 @Component({
   selector: 'app-library',
@@ -14,7 +15,7 @@ import { Media } from '../../models/media.model';
   imports: [
     CommonModule,
     RouterModule,
-    MediaImagePipe
+    MediaGridComponent
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss'

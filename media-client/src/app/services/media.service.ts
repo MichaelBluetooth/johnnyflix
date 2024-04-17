@@ -17,9 +17,9 @@ export class MediaService {
   }
 
   loadSupportedVersions() {
-    return this.http.get<any>('api/media/supportedversions').subscribe((versions) => {
-      this.SUPPORTED_VERSIONS = versions;
-    });
+    // return this.http.get<any>('api/media/supportedversions').subscribe((versions) => {
+    //   this.SUPPORTED_VERSIONS = versions;
+    // });
   }
 
   startTranscode(id: number) {
