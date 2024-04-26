@@ -1,13 +1,16 @@
 @import '../../../../../../src/styles.scss';
 
+
 .tag {
-    color: #14161A;;
-    background-color: #B71551;
+    color: #14161A;
+    background-color: #b93364;
 }
 
 .play-btn {
-    color: #14161A;
+    // color: #14161A;
+    color: white !important;
     background-color: #B71551;
+    border: 1px solid #B71551;
 }
 
 @media only screen and (max-width: $size-lg) {

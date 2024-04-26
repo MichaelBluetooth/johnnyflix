@@ -5,6 +5,7 @@ a {
     color: inherit;
 }
 
+
 @media only screen and (max-width: $size-lg) {
     .title {
         margin-left: 8px;        
@@ -65,6 +66,7 @@ a {
     text-overflow: ellipsis;
     text-wrap: nowrap;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .scrollable-row {
@@ -87,13 +89,17 @@ a {
     border: 5px solid transparent;
 }
 
+.progress-indicator {
+    position: relative;
+    height: 8px;
+    width: 20%;
+    background-color: #B21B54;
+}
+
+
 .media-image:hover {
     cursor: pointer;
     border: 5px solid #B21B54;
-}
-
-.media-container {
-    flex-shrink: 0;
 }
 
 .media-title {

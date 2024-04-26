@@ -37,7 +37,7 @@ export class VideoPlayerComponent {
     });
     this.player = videojs(this.target.nativeElement, this.options, () => {
       const previousPosition = localStorage.getItem(this.media.id.toString()) || this.media.lastPosition;
-      if (previousPosition && this.restart) {
+      if (previousPosition && !this.restart) {
         this.player.currentTime(previousPosition);
       }
 

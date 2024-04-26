@@ -16,7 +16,12 @@ import { VideoPlayerComponent } from 'jflix-components';
   styleUrl: './video.component.scss'
 })
 export class VideoComponent {
-  media$: Observable<Media> = this.route.data.pipe(map(d => d['media']));
+  media$: Observable<Media> = this.route.data.pipe(map(d => {
+    const position = +this.route.snapshot.queryParams['position'];
+    const media = d['media'];
+    media.lastPosition = position;
+    return media;
+  }));
   restart$: Observable<boolean> = this.route.queryParams.pipe(map(p => !!p['restart']));
 
   constructor(private route: ActivatedRoute) { }

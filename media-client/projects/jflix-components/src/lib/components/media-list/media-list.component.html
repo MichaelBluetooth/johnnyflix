@@ -6,10 +6,10 @@
     </div>
 
     <div class="media-container-wrapper" #scrollable>
-        <div class="media-container" *ngFor="let media of mediaList">
-            <a [routerLink]="['/watch', media.id]">
-                <img class="media-image" [src]="media.id | mediaImage:media.posterFileName" alt="Placeholder image">
-            </a>
+        <div class="media-container" *ngFor="let media of mediaList">            
+            <a [routerLink]="['/watch', media.id]" [queryParams]="{position: media.lastPosition}">
+                <img class="media-image" [src]="media.id | mediaImage:media.posterFileName" alt="Placeholder image">                
+            </a>            
             <a [routerLink]="['/media', media.id]">
                 <div class="media-title">
                     {{media.name}}
@@ -18,6 +18,8 @@
             <div class="media-release-year">
                 {{media.releaseYear}}
             </div>
+
+            <div class="progress-indicator" *ngIf="media.lastPosition > 0" [style.width]="(media.lastPosition * 1000 / media.duration) * 100 + '%'"></div>
         </div>
     </div>
 

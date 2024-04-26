@@ -36,6 +36,7 @@ export class VideoPlayerComponent implements OnInit {
     });
     this.player = videojs(this.target.nativeElement, this.options, () => {
       const previousPosition = localStorage.getItem(this.media.id.toString()) || this.media.lastPosition;
+      alert(previousPosition)
       if (previousPosition && !restart) {
         this.player.currentTime(previousPosition);
       }
