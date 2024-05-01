@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { TMDBSearchResponse } from './tmdb-search-response';
 import { join } from 'path';
 import { TMDBGenre } from 'src/core/dto/tmdb-genre.dto';
+import { TMDBPosterResponse } from './tmdb-poster-response';
 
 @Injectable()
 export class TMDBService {
@@ -41,6 +42,15 @@ export class TMDBService {
 
     getMovieGenres(): Promise<{ genres: TMDBGenre[] }> {
         return this.get('https://api.themoviedb.org/3/genre/movie/list?language=en', 'json');
+    }
+
+    getMoviePosters(tmdbMovieId: number, include_image_language = 'en,null'): Promise<TMDBPosterResponse> {
+        let url = `https://api.themoviedb.org/3/movie/${tmdbMovieId}/images`;
+        if(include_image_language){
+            url += `?include_image_language=${include_image_language}`;
+        }
+        this.logger.debug(`Getting posters for movie id: ${tmdbMovieId}`);
+        return this.get(url, 'json');
     }
 
     async get<T>(url: string, responseType: 'json' | 'blob' | 'buffer' = null): Promise<T> {

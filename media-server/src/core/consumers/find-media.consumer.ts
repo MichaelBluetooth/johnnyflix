@@ -22,6 +22,7 @@ export interface FindMedataJobData {
 export class FindMediaConsumer {
     private readonly allowed_file_types: Set<string> = new Set(['.mkv', '.mp4']);
     private readonly logger = new Logger(FindMediaConsumer.name);
+    private readonly max_number_images = 10;
 
     constructor(
         private mediaSvc: MediaService,
@@ -70,7 +71,7 @@ export class FindMediaConsumer {
     async process(job: Job<FindMedataJobData>) {
         this.logger.debug(`Processing library: ${job.data.libraryName}`);
 
-        const genres: Map<number, string> = await this.tmdb.getMovieGenres().then((genresList: {genres: TMDBGenre[]}) => {
+        const genres: Map<number, string> = await this.tmdb.getMovieGenres().then((genresList: { genres: TMDBGenre[] }) => {
             const genresMap = new Map<number, string>();
             genresList.genres.forEach(genre => {
                 genresMap.set(genre.id, genre.name);
@@ -101,11 +102,30 @@ export class FindMediaConsumer {
 
                     let media: Media = null
                     if (tmdbMatch.total_results > 0) {
-                        this.savePoster(movie.path, 'posters', tmdbMatch.results[0].poster_path);
-                        this.savePoster(movie.path, 'backdrops', tmdbMatch.results[0].backdrop_path);
+                        const images = await this.tmdb.getMoviePosters(tmdbMatch.results[0].id);
+                        images.posters.sort((a, b) => {
+                            if (a.vote_average === b.vote_average) {
+                                return a.vote_count > b.vote_count ? -1 : 1;
+                            } else {
+                                return a.vote_average > b.vote_average ? -1 : 1;
+                            }
+                        });
+                        images.backdrops.sort((a, b) => {
+                            if (a.vote_average === b.vote_average) {
+                                return a.vote_count > b.vote_count ? -1 : 1;
+                            } else {
+                                return a.vote_average > b.vote_average ? -1 : 1;
+                            }
+                        });
+                        for (const poster of images.posters.slice(0, this.max_number_images)) {
+                            this.savePoster(movie.path, 'posters', poster.file_path);
+                        }
+                        for (const backdrop of images.backdrops.slice(0, this.max_number_images)) {
+                            this.savePoster(movie.path, 'backdrops', backdrop.file_path);
+                        }
 
                         const releaseYear = Number(tmdbMatch.results[0].release_date.split('-')[0]);
-                        const posterFileName = basename(tmdbMatch.results[0].poster_path);
+                        const posterFileName = basename(images.posters[0].file_path);
                         media = await this.mediaSvc.associateMedia({
                             libraryId: job.data.libraryId,
                             fileName: movie.name,
@@ -115,7 +135,7 @@ export class FindMediaConsumer {
                             description: tmdbMatch.results[0].overview,
                             releaseYear: releaseYear > 0 ? releaseYear : null,
                             posterFileName: posterFileName,
-                            availablePosters: [posterFileName],
+                            availablePosters: images.posters.slice(0, this.max_number_images).map(poster => basename(poster.file_path)),
                             duration: durationMS,
                             tags: tmdbMatch.results[0].genre_ids.map(id => genres.has(id) ? genres.get(id) : null).filter(name => !!name)
                         });
