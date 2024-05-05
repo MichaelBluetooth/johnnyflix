@@ -8,7 +8,8 @@ import { Cache } from 'cache-manager';
 export enum StreamResolution {
     small = '320x180',
     medium = '854x480',
-    large = '1280x720'
+    large = '1280x720',
+    master = 'master'
 }
 
 interface CachedMedia {
@@ -22,10 +23,16 @@ export class StreamService {
 
     constructor(private mediaSvc: MediaService, @Inject(CACHE_MANAGER) private cacheManager: Cache) { }
 
-    async getManifest(mediaId: number, resolution: StreamResolution): Promise<string> {
-        this.logger.debug(`Fetching manifest ${resolution} for media: ${mediaId}`);
+    async getMasterManifest(mediaId: number): Promise<string> {
+        this.logger.debug(`Fetching master manifest for media: ${mediaId}`);
         const cachedMedia: CachedMedia = await this.getMedia(mediaId);
-        return `${cachedMedia.path}/hls/${cachedMedia.fileName}_${resolution}.m3u8`;
+        return `${cachedMedia.path}/hls/${cachedMedia.fileName}_master.m3u8`;
+    }
+
+    async getManifest(mediaId: number, manifestName: string): Promise<string> {
+        this.logger.debug(`Fetching manifest ${manifestName} for media: ${mediaId}`);
+        const cachedMedia: CachedMedia = await this.getMedia(mediaId);
+        return `${cachedMedia.path}/hls/${manifestName}`;
     }
 
     async getSegment(mediaId: number, segment: string) {

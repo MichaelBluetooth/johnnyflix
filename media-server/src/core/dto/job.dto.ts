@@ -17,5 +17,5 @@ export interface TranscodeJobData {
     fileName: string;
     mediaId: number;
     mediaName: string;
-    versionName: string;
+    versions: string[];
 }

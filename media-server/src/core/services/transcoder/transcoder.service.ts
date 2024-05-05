@@ -8,13 +8,13 @@ import { HlsVersion } from 'src/core/utils/hls-utils';
 export class TranscoderService {
     constructor(@InjectQueue('transcode') private transcodeQueue: Queue) { }
 
-    async queueMediaForTranscode(mediaName: string, mediaId: number, fileName: string, filePath: string, hlsDetail: HlsVersion): Promise<void> {
+    async queueMediaForTranscode(mediaName: string, mediaId: number, fileName: string, filePath: string, hlsDetails: HlsVersion[]): Promise<void> {
         await this.transcodeQueue.add({
             mediaName: mediaName,
             mediaId: mediaId,
             fileName: fileName,
             filePath: filePath,
-            hlsDetail: hlsDetail
+            hlsDetail: hlsDetails
         });
     }
 
@@ -54,7 +54,7 @@ export class TranscoderService {
                     fileName: job.data.fileName,
                     mediaName: job.data.mediaName,
                     mediaId: job.data.mediaId,
-                    versionName: job.data.hlsDetail.name,
+                    versions: job.data.hlsDetail.map(d => d.name),
                 }
             });
         }

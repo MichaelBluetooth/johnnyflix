@@ -69,14 +69,16 @@ export class MediaService {
         writeFileSync(`${media.path}/${media.fileName}`, file.buffer);
 
 
+        const versions = [];
         data.versions?.filter((version: CreateMediaVersion) => version.optimize)?.forEach((version: CreateMediaVersion) => {
             const hlsVersion = HlsVersion.ALL.find(v => v.name === version.name);
             if (hlsVersion) {
-                this.transcoderSvc.queueMediaForTranscode(media.name, media.id, media.fileName, media.path, hlsVersion);
+                versions.push(hlsVersion);
             } else {
                 this.logger.debug(`Could not find HLS version with name ${version.name}`)
             }
         });
+        this.transcoderSvc.queueMediaForTranscode(media.name, media.id, media.fileName, media.path, versions);
 
         return media;
     }
@@ -94,18 +96,22 @@ export class MediaService {
             this.savePoster(media.id, posters[i], data.posterFileNames[i]);
         }
 
+        const versions = [];
         data.versions?.forEach((version: UpdateMediaVersion) => {
             if (version.optimize) {
                 const hlsVersion = HlsVersion.ALL.find(v => v.name === version.name);
                 if (hlsVersion) {
-                    this.transcoderSvc.queueMediaForTranscode(media.name, media.id, media.fileName, media.path, hlsVersion);
+                    versions.push(hlsVersion);
                 } else {
                     this.logger.debug(`Could not find HLS version with name ${version.name}`)
                 }
             } else {
-                //TODO: clear the optimized version by deleting the HLS content associated with it
+                //TODO: clear the optimized version by deleting the HLS content associated with it and regenerating the master manifest
             }
         });
+        if(versions.length > 0){
+            this.transcoderSvc.queueMediaForTranscode(media.name, media.id, media.fileName, media.path, versions);
+        }
 
         return this.mediaRepo.save(media);
     }

@@ -38,7 +38,7 @@ export class TranscoderConsumer {
     // }
 
 
-    async transcode(job: Job, fileName: string, filePath: string, hlsVersion: HlsVersion) {
+    async transcode(job: Job, fileName: string, filePath: string, hlsVersions: HlsVersion[]) {
         const file = `${filePath}/${fileName}`;
         const outputDir = `${filePath}/hls`;
 
@@ -68,7 +68,7 @@ export class TranscoderConsumer {
             //         audioBitrate: '192k'
             //     }
             // ];
-            const resolutions = [hlsVersion];
+            const resolutions = hlsVersions;
 
             const variantPlaylists = [];
             for (const { resolution, videoBitrate, audioBitrate } of resolutions) {
@@ -101,28 +101,25 @@ export class TranscoderConsumer {
                     outputFileName
                 };
                 variantPlaylists.push(variantPlaylist);
-
-                let masterPlaylist = variantPlaylists
-                    .map((variantPlaylist) => {
-                        const { resolution, outputFileName } = variantPlaylist;
-                        const bandwidth =
-                            resolution === '320x180'
-                                ? 676800
-                                : resolution === '854x480'
-                                    ? 1353600
-                                    : 3230400;
-                        return `#EXT-X-STREAM-INF:BANDWIDTH=${bandwidth},RESOLUTION=${resolution}\n${outputFileName}`;
-                    })
-                    .join('\n');
-                masterPlaylist = `#EXTM3U\n` + masterPlaylist;
-
-                const masterPlaylistFileName = `${fileName.replace(
-                    '.',
-                    '_'
-                )}_master.m3u8`;
-                const masterPlaylistPath = `${outputDir}/${masterPlaylistFileName}`;
-                writeFileSync(masterPlaylistPath, masterPlaylist);
             }
+
+            let masterPlaylist = variantPlaylists
+                .map((variantPlaylist) => {
+                    const { resolution, outputFileName } = variantPlaylist;
+                    const bandwidth =
+                        resolution === '320x180'
+                            ? 676800
+                            : resolution === '854x480'
+                                ? 1353600
+                                : 3230400;
+                    return `#EXT-X-STREAM-INF:BANDWIDTH=${bandwidth},RESOLUTION=${resolution}\n${outputFileName}`;
+                })
+                .join('\n');
+            masterPlaylist = `#EXTM3U\n` + masterPlaylist;
+
+            const masterPlaylistFileName = `${fileName}_master.m3u8`;
+            const masterPlaylistPath = `${outputDir}/${masterPlaylistFileName}`;
+            writeFileSync(masterPlaylistPath, masterPlaylist);
         } catch (err) {
             this.logger.error(`Error transcoding ${file}`);
             throw err;

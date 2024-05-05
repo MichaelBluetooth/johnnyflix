@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, HttpCode, HttpStatus, Logger, Param, Res } from '@nestjs/common';
+import { Controller, Delete, Get, HttpCode, HttpStatus, Logger, Param } from '@nestjs/common';
 import { TranscoderService } from '../services/transcoder/transcoder.service';
 import { JobData, ScanLibraryFilesJobData, TranscodeJobData } from '../dto/job.dto';
 import { FindMediaService } from '../services/find-media/find-media.service';

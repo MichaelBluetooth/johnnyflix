@@ -150,11 +150,13 @@ export class FindMediaConsumer {
                         });
                     }
 
+                    const versions = [];
                     for (const version of HlsVersion.ALL) {
                         if (this.settings.defaultVersions.has(version.name)) {
-                            this.transcodeSvc.queueMediaForTranscode(media.name, media.id, media.fileName, media.path, version);
+                            versions.push(version);
                         }
                     }
+                    this.transcodeSvc.queueMediaForTranscode(media.name, media.id, media.fileName, media.path, versions);
                 }
             }
         }

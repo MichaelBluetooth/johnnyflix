@@ -19,12 +19,12 @@
             <td>{{job.id}}</td>
             <td>
               <ng-container *ngIf="transcodeData(job) as data">
-                <span>
-                  {{data.versionName | mediaVersionName}}
-                </span>
                 <a [routerLink]="['/media', data.mediaId]">
                   {{data.mediaName}}
-                </a>
+                </a>-
+                <span>
+                  {{data.versions | mediaVersionName}}
+                </span>                
               </ng-container>
               <ng-container *ngIf="scanLibraryFilesData(job) as data">
                 Scan Library Files

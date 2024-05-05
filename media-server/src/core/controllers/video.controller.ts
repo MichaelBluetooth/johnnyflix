@@ -9,16 +9,31 @@ export class VideoController {
 
     constructor(private streamSvc: StreamService) { }
 
-    @Get(':mediaId/(*.m3u8)')
+    @Get(':mediaId/manifest.m3u8')
     async getManifest(@Param('mediaId') mediaId: string, @Param('locator') locator: string, @Res() res: Response) {
-        const videoPath: string = await this.streamSvc.getManifest(+mediaId, StreamResolution.small);
-        this.logger.debug(videoPath);
+        const videoPath: string = await this.streamSvc.getMasterManifest(+mediaId);
+        this.logger.debug('Path ' + videoPath);
+        this.logger.debug('Locator: ' + locator);
         res.writeHead(200, { 'Access-Control-Allow-Origin': '*' });
         readFile(videoPath, (error, data) => {
             if(error){
                 this.logger.error(error);
             }
-            res.end(data, 'utf-8');
+            res.end(data, 'utf-8');            
+        });
+    }
+
+    @Get(':mediaId/:version')
+    async getManifestVersion(@Param('mediaId') mediaId: string, @Param('version') version: string, @Res() res: Response) {
+        const videoPath: string = await this.streamSvc.getManifest(+mediaId, version as any);
+        this.logger.debug('Path ' + videoPath);
+        this.logger.debug('Version: ' + version);
+        res.writeHead(200, { 'Access-Control-Allow-Origin': '*' });
+        readFile(videoPath, (error, data) => {
+            if(error){
+                this.logger.error(error);
+            }            
+            res.end(data, 'utf-8');            
         });
     }
 
