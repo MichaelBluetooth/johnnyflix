@@ -6,7 +6,6 @@ import { CoreModule } from './core/core.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
 
@@ -33,7 +32,6 @@ import configuration from './config/configuration';
       ttl: 20000
     }),
     CoreModule,
-    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
