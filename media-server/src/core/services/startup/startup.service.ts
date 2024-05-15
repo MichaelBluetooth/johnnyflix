@@ -5,7 +5,7 @@ import { Library } from 'src\\core\\entities\\library.entity';
 import { TranscoderService } from '..\\transcoder\\transcoder.service';
 import { PlayHistoryService } from '..\\play-history\\play-history.service';
 import { FindMediaService } from '..\\find-media\\find-media.service';
-import { SettingsService } from '../settings/settings.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class StartupService implements OnApplicationBootstrap {
@@ -17,18 +17,17 @@ export class StartupService implements OnApplicationBootstrap {
         private jobSvc: TranscoderService,
         private playHistory: PlayHistoryService,
         private findMediaSvc: FindMediaService,
-        private settings: SettingsService) { }
+        private config: ConfigService) { }
 
-    async onApplicationBootstrap() {               
+    async onApplicationBootstrap() {
         this.logger.debug('BOOSTRAPPING APP');
-        this.settings.readSettings();
         //await this.readConfigFile();
         await this.seedTestData();
-    }    
+    }
 
     async readConfigFile() {
         const existingLibraries = await this.librarySvc.getLibraries();
-        for (const libDetail of this.settings.defaultLibraries) {
+        for (const libDetail of this.config.get<any>('libraries')) {
             const existingLibrary = existingLibraries.find(lib => lib.name === libDetail.name);
             if (existingLibrary) {
                 this.logger.debug(`Library with name ${existingLibrary.name} already exists`);
@@ -119,7 +118,7 @@ export class StartupService implements OnApplicationBootstrap {
             ['Action', 'Adventure', 'Thriller', 'Science Fiction'],
             "In this sequel, we're sent back to the battlefield, as the Federation's best mobile infantry unit's are slowly being overpowered by the killer bugs. They're light years from the nearest reinforcements and are trapped on a remote outpost. Though they've set up protection around the post, the enemy's in the outpost, in a way which they never thought of.",
             2004,
-            5460000,                        
+            5460000,
             "Starship.Troopers.2.png",
             new Date(2023, 1, 15)
         );

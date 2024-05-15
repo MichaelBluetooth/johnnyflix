@@ -10,7 +10,8 @@
 
     "build:mobile": "ng build johnnyflix-mobile",
     "build:components": "ng build jflix-components",
-    "build:android": "npm run build:components & npm run build:mobile & npx cap copy android"
+    "build:android": "npm run build:components & npm run build:mobile & npx cap copy android",
+    "open:android": "npx cap open android"
   },
   "private": true,
   "dependencies": {

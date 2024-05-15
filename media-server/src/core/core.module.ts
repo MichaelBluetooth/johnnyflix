@@ -20,11 +20,13 @@ import { FindMediaService } from './services/find-media/find-media.service';
 import { FindMediaConsumer } from './consumers/find-media.consumer';
 import { TranscoderConsumer } from './consumers/transcoder.consumer';
 import { TMDBService } from './services/tmdb/tmdb.service';
-import { SettingsService } from './services/settings/settings.service';
 import { ImageController } from './controllers/image.controller';
 import { HomeController } from './controllers/home.controller';
 
 @Module({
+  exports: [
+    TypeOrmModule
+  ],
   imports: [
     TypeOrmModule.forFeature([Library, LibraryDirectory, Media, PlayHistory]),
     BullModule.registerQueue({
@@ -53,8 +55,7 @@ import { HomeController } from './controllers/home.controller';
     TranscoderConsumer,
     FindMediaConsumer,
     TMDBService,
-    SettingsService
-  ],
+    ],
   controllers: [
     VideoController,
     LibraryController,

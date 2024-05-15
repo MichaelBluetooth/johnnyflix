@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { readFileSync } from 'fs';
+
 
 async function bootstrap() {
   // const httpsOptions = {
@@ -16,7 +16,7 @@ async function bootstrap() {
   });
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, transform: true })
-  )
+  );
 
   const config = new DocumentBuilder()
     .setTitle('JohnnyFlix')

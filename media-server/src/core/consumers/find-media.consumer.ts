@@ -7,10 +7,10 @@ import { Media } from '../entities/media.entity';
 import { MediaService } from '../services/media/media.service';
 import { TMDBService } from '../services/tmdb/tmdb.service';
 import { getVideoDurationInSeconds } from 'get-video-duration';
-import { SettingsService } from '../services/settings/settings.service';
 import { TranscoderService } from '../services/transcoder/transcoder.service';
 import { HlsVersion } from '../utils/hls-utils';
 import { TMDBGenre } from '../dto/tmdb-genre.dto';
+import { ConfigService } from '@nestjs/config';
 
 export interface FindMedataJobData {
     libraryId: number;
@@ -27,8 +27,8 @@ export class FindMediaConsumer {
     constructor(
         private mediaSvc: MediaService,
         private tmdb: TMDBService,
-        private settings: SettingsService,
-        private transcodeSvc: TranscoderService
+        private transcodeSvc: TranscoderService,
+        private config: ConfigService
     ) { }
 
     ThroughDirectory(dir: string, files: { name: string, path: string }[] = []) {
@@ -70,6 +70,7 @@ export class FindMediaConsumer {
     @Process()
     async process(job: Job<FindMedataJobData>) {
         this.logger.debug(`Processing library: ${job.data.libraryName}`);
+        const defaultVersions = new Set<string>(this.config.get<string[]>('default_versions'));
 
         const genres: Map<number, string> = await this.tmdb.getMovieGenres().then((genresList: { genres: TMDBGenre[] }) => {
             const genresMap = new Map<number, string>();
@@ -149,10 +150,10 @@ export class FindMediaConsumer {
                             duration: durationMS
                         });
                     }
-
+                    
                     const versions = [];
                     for (const version of HlsVersion.ALL) {
-                        if (this.settings.defaultVersions.has(version.name)) {
+                        if (defaultVersions.has(version.name)) {
                             versions.push(version);
                         }
                     }

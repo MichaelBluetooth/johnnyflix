@@ -6,6 +6,9 @@ import { CoreModule } from './core/core.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
@@ -24,15 +27,22 @@ import { join } from 'path';
     // ServeStaticModule.forRoot({
     //   rootPath: join(__dirname, '.', 'client')
     // }),
-    CoreModule,
     CacheModule.register({
       isGlobal: true,
       max: 5,
       ttl: 20000
-    })
+    }),
+    CoreModule,
+    AuthModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configuration],
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService
+  ],
 })
 export class AppModule {
 
