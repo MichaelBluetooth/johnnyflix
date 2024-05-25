@@ -22,13 +22,19 @@ import { TranscoderConsumer } from './consumers/transcoder.consumer';
 import { TMDBService } from './services/tmdb/tmdb.service';
 import { ImageController } from './controllers/image.controller';
 import { HomeController } from './controllers/home.controller';
+import { User } from './entities/user.entity';
+import { UserService } from './services/user/user.service';
+import { ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   exports: [
-    TypeOrmModule
+    TypeOrmModule,
+    JwtModule,
+    UserService
   ],
   imports: [
-    TypeOrmModule.forFeature([Library, LibraryDirectory, Media, PlayHistory]),
+    TypeOrmModule.forFeature([Library, LibraryDirectory, Media, PlayHistory, User]),
     BullModule.registerQueue({
       name: 'transcode',
       redis: {
@@ -42,7 +48,18 @@ import { HomeController } from './controllers/home.controller';
         host: 'localhost',
         port: 6379,
       },
-    })
+    }),
+    JwtModule.registerAsync({
+      useFactory: (config: ConfigService) => {
+        return {
+          secret: config.get<string>('jwt.secret'),
+          signOptions: {
+            expiresIn: config.get<string | number>('jwt.expiration_time'),
+          }
+        };
+      },
+      inject: [ConfigService],
+    }),
   ],
   providers: [
     StartupService,
@@ -55,7 +72,8 @@ import { HomeController } from './controllers/home.controller';
     TranscoderConsumer,
     FindMediaConsumer,
     TMDBService,
-    ],
+    UserService
+  ],
   controllers: [
     VideoController,
     LibraryController,

@@ -1,7 +1,9 @@
-import { Controller, Get, Logger } from '@nestjs/common';
+import { Controller, Get, Logger, UseGuards } from '@nestjs/common';
 import { MediaService } from '../services/media/media.service';
 import { PlayHistoryService } from '../services/play-history/play-history.service';
+import { AuthGuard } from '../guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('api/home')
 export class HomeController {
     private readonly logger = new Logger(HomeController.name);

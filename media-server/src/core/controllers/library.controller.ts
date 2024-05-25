@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Logger, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Param, Post, Res, UseGuards } from '@nestjs/common';
 import { LibraryService } from '../services/library/library.service';
 import { CreateLibraryRequest } from '../dto/create-library.dto';
 import { Response } from 'express';
 import { FindMediaService } from '../services/find-media/find-media.service';
+import { AuthGuard } from '../guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('api/library')
 export class LibraryController {
     private readonly logger = new Logger(LibraryController.name);

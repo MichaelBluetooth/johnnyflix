@@ -6,8 +6,10 @@ import { CoreModule } from './core/core.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -36,6 +38,7 @@ import configuration from './config/configuration';
       isGlobal: true,
       load: [configuration],
     }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [

@@ -23,6 +23,10 @@ $header-height: 52px;
 }
 
 @media only screen and (max-width: $size-lg) {
+    #logout-btn-navbar {
+        display: none;
+    }
+
     .main {
         height: calc(100% - $header-height);
     }
@@ -40,6 +44,10 @@ $header-height: 52px;
 }
 
 @media only screen and (min-width: $size-lg) {
+    #logout-btn-navbar {
+        display: block;
+    }    
+
     .main {
         height: calc(100% - $header-height);
     }

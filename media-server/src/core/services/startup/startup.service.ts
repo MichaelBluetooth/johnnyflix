@@ -6,6 +6,7 @@ import { TranscoderService } from '..\\transcoder\\transcoder.service';
 import { PlayHistoryService } from '..\\play-history\\play-history.service';
 import { FindMediaService } from '..\\find-media\\find-media.service';
 import { ConfigService } from '@nestjs/config';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class StartupService implements OnApplicationBootstrap {
@@ -17,7 +18,8 @@ export class StartupService implements OnApplicationBootstrap {
         private jobSvc: TranscoderService,
         private playHistory: PlayHistoryService,
         private findMediaSvc: FindMediaService,
-        private config: ConfigService) { }
+        private config: ConfigService,
+        private userService: UserService) { }
 
     async onApplicationBootstrap() {
         this.logger.debug('BOOSTRAPPING APP');
@@ -59,9 +61,11 @@ export class StartupService implements OnApplicationBootstrap {
     }
 
     async seedTestData() {
-        this.deleteTestData();
+        await this.deleteTestData();
         this.jobSvc.clearAllJobs();
         this.findMediaSvc.clearAllJobs();
+
+        await this.userService.registerUser('matthew.john.bischoff@gmail.com', 'chemsw123');
 
         const library: Library = await this.librarySvc.createLibrary({
             name: 'Movies',
@@ -176,6 +180,8 @@ export class StartupService implements OnApplicationBootstrap {
     }
 
     async deleteTestData() {
+        await this.userService.deleteUser('matthew.john.bischoff@gmail.com');
+
         const libraries = await this.librarySvc.getLibraries();
         for (const library of libraries) {
             const mediaList = await this.mediaSvc.getMediaByLibraryId(library.id);

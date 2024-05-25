@@ -1,8 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Library } from '../../models/library.model';
 import { JflixLibraryService } from '../../services/library.service';
+import { JFlixAuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'jflix-side-panel',
@@ -19,7 +20,7 @@ export class SidePanelComponent implements OnInit {
 
   @Output() menuItemClicked = new EventEmitter<void>();
 
-  constructor(private librarySvc: JflixLibraryService){}
+  constructor(private librarySvc: JflixLibraryService, private auth: JFlixAuthService, private router: Router){}
 
   ngOnInit(): void {
     this.librarySvc.getLibraries().subscribe((libraries: Library[]) => {
@@ -29,5 +30,11 @@ export class SidePanelComponent implements OnInit {
 
   triggerMenuItemClicked(){
     this.menuItemClicked.next();
+  }
+
+  logout(){
+    this.auth.logout().subscribe(() => {
+      this.router.navigate(['/login']);
+    });
   }
 }

@@ -1,12 +1,13 @@
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { App as CapacitorApp } from '@capacitor/app';
 import { NavigationBar } from '@capgo/capacitor-navigation-bar';
-import { JflixBaseUrlService } from 'jflix-components';
+import { JFlixPlatformService, JflixBaseUrlService } from 'jflix-components';
 import { Capacitor } from '@capacitor/core';
 
-export function initializeApp(baseUrlSvc: JflixBaseUrlService) {
+export function initializeApp(baseUrlSvc: JflixBaseUrlService, platformService: JFlixPlatformService) {
     return (): Promise<void> => new Promise(async r => {
         const platform = await Capacitor.getPlatform();
+        platformService.setPlatform(platform);
         
         if ('web' !== platform) {
             //todo: this base url needs to come from some user-entered config

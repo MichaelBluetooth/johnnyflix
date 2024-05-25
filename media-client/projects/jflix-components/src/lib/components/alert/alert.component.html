@@ -1,0 +1,11 @@
+<div class="notification" 
+    [class.is-light]="isLight"
+    [class.is-danger]="type==='danger'"
+    [class.is-info]="type==='info'"
+    [class.is-success]="type==='success'"
+    [class.is-warning]="type==='warning'"
+    [class.is-link]="type==='link'"
+    [class.is-primary]="type==='primary'">
+    <button class="delete" (click)="dismiss.emit()"></button>
+    {{message}}
+</div>

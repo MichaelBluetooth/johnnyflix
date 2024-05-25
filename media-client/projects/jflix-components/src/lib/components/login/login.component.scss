@@ -1,0 +1,28 @@
+@import '../../../../../../src/styles.scss';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media only screen and (max-width: $size-lg) {
+    .box {
+        height: 95%;
+        width: 90%;
+    }
+}
+
+@media only screen and (min-width: $size-lg) {
+    .box {
+        width: 425px;
+    }
+}

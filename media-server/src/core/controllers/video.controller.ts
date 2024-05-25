@@ -1,8 +1,10 @@
-import { Controller, Get, Header, HttpStatus, Logger, Param, Req, Res } from '@nestjs/common';
+import { Controller, Get, Header, HttpStatus, Logger, Param, Req, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { createReadStream, statSync, readFile } from 'fs';
-import { StreamResolution, StreamService } from '../services/stream/stream.service';
+import { StreamService } from '../services/stream/stream.service';
+import { AuthGuard } from '../guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('api/video')
 export class VideoController {
     private readonly logger = new Logger(VideoController.name);

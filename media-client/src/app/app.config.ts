@@ -7,6 +7,7 @@ import { MediaService } from './services/media.service';
 import { APP_BASE_HREF } from '@angular/common';
 import { urlInterceptor } from './interceptors/url.interceptor';
 import { withModule } from '@angular/core/testing';
+import { JflixServicesModule } from 'jflix-components';
 
 
 export function initializeApp(media: MediaService) {
@@ -18,7 +19,9 @@ export function initializeApp(media: MediaService) {
 
 
 export const appConfig: ApplicationConfig = {
+  
   providers: [
+    importProvidersFrom(JflixServicesModule),
     {
       // provide: APP_BASE_HREF, useValue: environment.isProd ? '/client' : '/'
       provide: APP_BASE_HREF, useValue: '/'

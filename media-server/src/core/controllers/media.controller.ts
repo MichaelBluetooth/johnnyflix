@@ -1,9 +1,7 @@
-import { Body, Controller, Get, Logger, Param, Post, Put, Res, StreamableFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, Post, Put, Res, StreamableFile, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { MediaService } from '../services/media/media.service';
 import { TranscoderService } from '../services/transcoder/transcoder.service';
-import { Response } from 'express';
 import { UpdateMediaRequest } from '../dto/update-media.dto';
-import { createReadStream, existsSync } from 'fs';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { HlsVersion } from '../utils/hls-utils';
 import { LibraryService } from '../services/library/library.service';
@@ -11,9 +9,9 @@ import { CreateMediaRequest } from '../dto/create-media.dto';
 import { ParseCreateMediaBodyPipe } from '../pipes/create-media-body.pipe';
 import { ParseUpdateMediaBodyPipe } from '../pipes/update-media-body.pipe';
 import { MediaDetails } from '../dto/media-details.dto';
-import { join } from 'path';
-import { ROOT_DIR } from 'src/app_root';
+import { AuthGuard } from '../guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('api/media')
 export class MediaController {
     private readonly logger = new Logger(MediaController.name);

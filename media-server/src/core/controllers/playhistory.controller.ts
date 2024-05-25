@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, Logger, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Param, Post, UseGuards } from '@nestjs/common';
 import { PlayHistoryService } from '../services/play-history/play-history.service';
 import { UpdatePlayHistoryRequest } from '../dto/update-play-history.dto';
+import { AuthGuard } from '../guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('api/playhistory')
 export class PlayHistoryController {
     private readonly logger = new Logger(PlayHistoryController.name);

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { SidePanelComponent } from '../side-panel/side-panel.component';
+import { JFlixAuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'jflix-navbar',
@@ -17,10 +18,18 @@ import { SidePanelComponent } from '../side-panel/side-panel.component';
 export class NavbarComponent implements OnInit {
   showMenu = false;
 
+  constructor(private auth: JFlixAuthService, private router: Router){}
+
   ngOnInit(): void {
   }
 
   menuItemClicked() {
     this.showMenu = false;
+  }
+
+  logout(){
+    this.auth.logout().subscribe(() => {
+      this.router.navigate(['/login']);
+    });
   }
 }

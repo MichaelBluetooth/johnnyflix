@@ -1,0 +1,30 @@
+<form class="box" [formGroup]="loginForm" (submit)="submit()">
+    <img class="pb-4" src="assets/logo-ticket.png" width="275px">
+    <div style="width: 80%">
+        <div class="field">
+            <label for="" class="label">Email</label>
+            <div class="control has-icons-left">
+                <input type="email" placeholder="e.g. someguy@gmail.com" class="input" formControlName="email" [class.is-danger]="loginForm.dirty && loginForm.controls.email.invalid && loginForm.controls.email.touched && loginForm.controls.email.errors">
+                <span class="icon is-small is-left">
+                    <i class="bi bi-envelope"></i>
+                </span>
+            </div>
+            <p class="help is-danger" *ngIf="loginForm.dirty && loginForm.controls.email.invalid && loginForm.controls.email.touched && loginForm.controls.email.errors">This email is invalid</p>
+        </div>
+        <div class="field">
+            <label for="" class="label">Password</label>
+            <div class="control has-icons-left">
+                <input type="password" placeholder="*******" class="input" formControlName="password" [class.is-danger]="loginForm.dirty && loginForm.controls.password.invalid && loginForm.controls.password.touched && loginForm.controls.password.errors">
+                <span class="icon is-small is-left">
+                    <i class="bi bi-lock"></i>
+                </span>
+            </div>
+            <p class="help is-danger" *ngIf="loginForm.dirty && loginForm.controls.password.invalid && loginForm.controls.password.touched && loginForm.controls.password.errors">Password is required</p>
+        </div>
+        <div class="field">
+            <button class="button is-success" [disabled]="loginForm.invalid">
+                Login
+            </button>
+        </div>
+    </div>
+</form>

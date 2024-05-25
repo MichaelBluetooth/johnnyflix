@@ -23,4 +23,8 @@ export class NavbarComponent implements OnInit {
   menuItemClicked() {
     this.showMenu = false;
   }
+
+  logout(){
+
+  }
 }

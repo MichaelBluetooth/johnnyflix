@@ -1,10 +1,11 @@
-import { Controller, Get, Logger, Param, Post, Res, StreamableFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Logger, Param, Post, Res, StreamableFile, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { existsSync, createReadStream } from 'fs';
 import { join } from 'path';
 import { ROOT_DIR } from 'src/app_root';
 import { Response } from 'express';
 import { MediaService } from '../services/media/media.service';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('api/image')
 export class ImageController {
@@ -40,6 +41,7 @@ export class ImageController {
         return this.mediaSvc.getPosters(+id);
     }
 
+    @UseGuards(AuthGuard)
     @Post(':id/poster/upload')
     @UseInterceptors(FileFieldsInterceptor([
         { name: 'posters', maxCount: 5 }

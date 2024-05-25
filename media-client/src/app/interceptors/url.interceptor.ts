@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 import { catchError, tap } from 'rxjs';
 
 export const urlInterceptor: HttpInterceptorFn = (req, next) => {
-  console.log(`URL: ${req.url}`);
+  
   const newReq = req.clone({ url: environment.baseUrl + req.url });
 
   next(newReq)
